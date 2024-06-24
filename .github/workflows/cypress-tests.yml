@@ -15,18 +15,35 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
 
+    services:
+      web:
+        image: node:14
+        ports:
+          - 3000:3000
+        options: >-
+          --health-cmd="curl --fail http://localhost:3000 || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        volumes:
+          - .:/app
+        command: >
+          sh -c "cd /app/test-app && npm install && npm start"
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
       - name: Install dependencies
         run: npm install
         working-directory: ./test-app
+
+      - name: Start application
+        run: npm start &
+        working-directory: ./test-app
+
+      - name: Wait for application to be ready
+        run: npx wait-on http://localhost:3000
 
       - name: Run Cypress tests
         run: npm run test:e2e
