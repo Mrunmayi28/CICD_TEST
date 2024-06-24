@@ -19,15 +19,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '14'
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./
+        working-directory: ./test-app
 
       - name: Run Cypress tests
         run: npm run test:e2e
-        working-directory: ./
+        working-directory: ./test-app
