@@ -26,7 +26,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./
 
       - name: Run Cypress tests
-        run: npm run test:test-app/cypress/e2e/test1.cy.js
-
+        run: npm run test:e2e
+        working-directory: ./
