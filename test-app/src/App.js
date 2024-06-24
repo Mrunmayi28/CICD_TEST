@@ -1,15 +1,16 @@
 // src/App.js
 
 import React from 'react';
-import Counter from './Counter';
-import './App.css';
+import Counter from './Counter'; // Assuming Counter component is still in use
+import TodoList from './TodoList';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
+    <div>
       <Counter />
+      <TodoList />
     </div>
   );
-}
+};
 
 export default App;
