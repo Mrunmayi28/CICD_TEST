@@ -11,9 +11,11 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
-    "scripts": {
-      "test:e2e": "cypress run --headless --browser chrome"
-    },
+"scripts": {
+  "start": "react-scripts start",
+  "test:e2e": "cypress run --headless --browser chrome"
+},
+
   
   "eslintConfig": {
     "extends": [
