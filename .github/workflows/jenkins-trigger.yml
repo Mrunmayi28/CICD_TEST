@@ -12,6 +12,6 @@ jobs:
       - name: Trigger Jenkins Job
         uses: appleboy/jenkins-action@v0.0.2
         with:
-          url: 'http://localhost:8080/job/Test/build'
+          url: 'https://specifies-trial-mexican-footwear.trycloudflare.com/job/Test/build'
           user: 'mrunmayi'
           token: ${{ secrets.JENKINS_TOKEN }}
