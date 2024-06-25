@@ -3,13 +3,18 @@ name: Trigger Jenkins Build
 on:
   push:
     branches:
-      - Jenkins  # Adjust to your branch
+      - Jenkins  # Adjust to your branch name
 
 jobs:
   trigger-jenkins:
     runs-on: ubuntu-latest  # Use 'ubuntu-latest' for Linux runner
 
     steps:
+    - name: ping Jenkins Server
+      run: |
+        ping http://localhost:8080
+
+
     - name: Trigger Jenkins Job
       env:
         JENKINS_URL: 'http://localhost:8080'  # Jenkins URL
