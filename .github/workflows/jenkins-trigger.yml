@@ -3,7 +3,7 @@ name: Trigger Jenkins Build
 on:
   push:
     branches:
-      - Jenkins # Adjust to your branch
+      - Jenkins  # Adjust to your branch
 
 jobs:
   trigger-jenkins:
@@ -12,19 +12,9 @@ jobs:
     steps:
     - name: Trigger Jenkins Job
       env:
-        INPUT_URL: 'http://localhost:8080'  # Jenkins URL
-        INPUT_USER: ${{ secrets.JENKINS_USER }}  # Jenkins username
-        INPUT_TOKEN: ${{ secrets.JENKINS_TOKEN }}  # Jenkins API token
-        INPUT_JOB: 'github-test'  # Jenkins job name
+        JENKINS_URL: 'http://localhost:8080'  # Jenkins URL
+        JENKINS_USER: ${{ secrets.JENKINS_USER }}  # Jenkins username
+        JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}  # Jenkins API token
+        JENKINS_JOB: 'github-test'  # Jenkins job name
       run: |
-        docker run --rm \
-          -e INPUT_URL \
-          -e INPUT_USER \
-          -e INPUT_TOKEN \
-          -e INPUT_JOB \
-          -v "/var/run/docker.sock":"/var/run/docker.sock" \
-          -v "/home/runner/work/_temp/_github_home":"/github/home" \
-          -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" \
-          -v "/home/runner/work/_temp/_runner_file_commands":"/github/file_commands" \
-          -v "/home/runner/work/CICD_TEST/CICD_TEST":"/github/workspace" \
-          0ca4b2:6dc6d9355faa485e9037445881669789
+        curl -X POST -u "${JENKINS_USER}:${JENKINS_TOKEN}" "${JENKINS_URL}/job/${JENKINS_JOB}/build"
