@@ -1,0 +1,18 @@
+name: Trigger Jenkins Build
+
+on:
+  push:
+    branches:
+      - jenkins  # Adjust to your branch
+
+jobs:
+  trigger-jenkins:
+    runs-on: windows-latest  # Use 'windows-latest' for Windows runner
+
+    steps:
+    - name: Trigger Jenkins Job
+      uses: appleboy/jenkins-action@master
+      with:
+        url: 'http://localhost:8080/job/github-test/build'
+        user: ${{ secrets.JENKINS_USER }}
+        token: ${{ secrets.JENKINS_TOKEN }}
