@@ -1,18 +1,17 @@
-name: Check Jenkins Integration
+name: Trigger Jenkins Job
 
 on:
   push:
-    branches: [ Jenkins ]  # Replace with your branch name(s)
+    branches:
+      - Jenkins
 
 jobs:
-  check-jenkins:
+  trigger-jenkins:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Check Jenkins Availability
-      run: |
-        if ! curl -sSf -o /dev/null "${{ secrets.JENKINS_URL }}"; then
-          echo "Jenkins server at ${{ secrets.JENKINS_URL }} is unreachable."
-          exit 1
-        fi
-        echo "Jenkins server is reachable!"
+      - name: Trigger Jenkins Job
+        uses: appleboy/jenkins-action@v0.0.2
+        with:
+          url: 'http://localhost:8080/job/Test/build'
+          user: 'mrunmayi'
+          token: ${{ secrets.JENKINS_API_TOKEN }}
