@@ -10,12 +10,17 @@ jobs:
     runs-on: ubuntu-latest  # Use 'ubuntu-latest' for Linux runner
 
     steps:
-    - name: ping Jenkins Server
+    - name: Check Jenkins Availability
       run: |
-        ping http://localhost:8080
-
+        if ! curl -sSf -o /dev/null "${JENKINS_URL}"; then
+          echo "Jenkins server at ${JENKINS_URL} is unreachable."
+          exit 1
+        fi
+      env:
+        JENKINS_URL: 'http://localhost:8080'  # Jenkins URL
 
     - name: Trigger Jenkins Job
+      if: success()
       env:
         JENKINS_URL: 'http://localhost:8080'  # Jenkins URL
         JENKINS_USER: ${{ secrets.JENKINS_USER }}  # Jenkins username
