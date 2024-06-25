@@ -3,11 +3,11 @@ name: Trigger Jenkins Build
 on:
   push:
     branches:
-      - Jenkins  # Adjust to your branch
+      - main  # Adjust to your branch
 
 jobs:
   trigger-jenkins:
-    runs-on: windows-latest  # Use 'windows-latest' for Windows runner
+    runs-on: ubuntu-latest  # Use 'ubuntu-latest' for Linux runner
 
     steps:
     - name: Trigger Jenkins Job
