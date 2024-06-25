@@ -1,30 +1,18 @@
-name: Trigger Jenkins Build
+name: Check Jenkins Integration
 
 on:
   push:
-    branches:
-      - Jenkins  # Adjust to your branch name
+    branches: [ Jenkins ]  # Replace with your branch name(s)
 
 jobs:
-  trigger-jenkins:
-    runs-on: ubuntu-latest  # Use 'ubuntu-latest' for Linux runner
+  check-jenkins:
+    runs-on: ubuntu-latest
 
     steps:
     - name: Check Jenkins Availability
       run: |
-        if ! curl -sSf -o /dev/null "${JENKINS_URL}"; then
-          echo "Jenkins server at ${JENKINS_URL} is unreachable."
+        if ! curl -sSf -o /dev/null "http://${{ secrets.JENKINS_URL }}"; then
+          echo "Jenkins server at ${{ secrets.JENKINS_URL }} is unreachable."
           exit 1
         fi
-      env:
-        JENKINS_URL: 'http://localhost:8080'  # Jenkins URL
-
-    - name: Trigger Jenkins Job
-      if: success()
-      env:
-        JENKINS_URL: 'http://localhost:8080'  # Jenkins URL
-        JENKINS_USER: ${{ secrets.JENKINS_USER }}  # Jenkins username
-        JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}  # Jenkins API token
-        JENKINS_JOB: 'github-test'  # Jenkins job name
-      run: |
-        curl -X POST -u "${JENKINS_USER}:${JENKINS_TOKEN}" "${JENKINS_URL}/job/${JENKINS_JOB}/build"
+        echo "Jenkins server is reachable!"
