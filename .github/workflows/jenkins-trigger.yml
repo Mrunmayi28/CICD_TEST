@@ -14,4 +14,4 @@ jobs:
         with:
           url: 'http://localhost:8080/job/Test/build'
           user: 'mrunmayi'
-          token: ${{ secrets.JENKINS_API_TOKEN }}
+          token: ${{ secrets.JENKINS_TOKEN }}
