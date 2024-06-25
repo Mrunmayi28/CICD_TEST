@@ -11,7 +11,7 @@ jobs:
     steps:
     - name: Check Jenkins Availability
       run: |
-        if ! curl -sSf -o /dev/null "http://${{ secrets.JENKINS_URL }}"; then
+        if ! curl -sSf -o /dev/null "${{ secrets.JENKINS_URL }}"; then
           echo "Jenkins server at ${{ secrets.JENKINS_URL }} is unreachable."
           exit 1
         fi
